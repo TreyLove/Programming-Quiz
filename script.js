@@ -19,7 +19,11 @@ var scoreListElement = scoreBoard.querySelector('ul')
 var newGame = document.getElementById("new-game")
 var score = 0
 
+
 try { scoreArray = JSON.parse(localStorage.getItem("quizScore")) } catch (error) { }
+if (scoreArray === null) {
+    scoreArray = []
+}
 // this sets the constructer for the questions and answers
 function Question(question, answerArray, correct, answered) {
     this.correct = correct;
@@ -93,11 +97,15 @@ var leaderboard = function () {
 
     scoreElement.textContent = "Your Score was: " + score + " out of " + questionArray.length
     scoreListElement.innerHTML = ""
+
+
     for (var i = 0; i < scoreArray.length; i++) {
         var li = document.createElement("li")
         li.textContent = scoreArray[i]
         scoreListElement.appendChild(li)
     }
+
+
 
 
 
@@ -201,6 +209,7 @@ submitButton.addEventListener("click", function () {
         return
     }
     //logs your score to the leaderboard and commits it to local storage
+
     scoreArray.push(playerName + ": " + score)
     localStorage.setItem("quizScore", JSON.stringify(scoreArray))
     submitButton.style.display = "none";
